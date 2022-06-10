@@ -1,23 +1,20 @@
 """Defines the AddServer RPC (Remote Procedure Call) as per Figure 4.1."""
 
-from . import BaseRPCRequest, BaseRPCResponse
+from typing import Union
+
+from pydantic import StrictBool
+
+from . import Address, BaseRPCRequest, BaseRPCResponse
 
 
 class AddServerRPCRequest(BaseRPCRequest):
   """Implements AddServer RPC request arguments."""
 
-  @property
-  def new_server(self):
-    pass
+  new_server: Address
 
 
 class AddServerRPCResponse(BaseRPCResponse):
   """Implements AddServer RPC response results."""
 
-  @property
-  def status(self):
-    pass
-
-  @property
-  def leader_hint(self):
-    pass
+  status: StrictBool
+  leader_hint: Union[Address, None]
