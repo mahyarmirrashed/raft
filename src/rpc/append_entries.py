@@ -2,8 +2,9 @@
 
 from typing import List
 
-from db.objects import Entry, Identity
+from db import Entry
 from pydantic import NonNegativeInt, StrictBool
+from utils import Address
 
 from . import BaseRPCRequest, BaseRPCResponse
 
@@ -12,7 +13,7 @@ class AppendEntriesRPCRequest(BaseRPCRequest):
   """Implements AppendEntries RPC request arguments."""
 
   term: NonNegativeInt
-  leader_identity: Identity
+  leader_identity: Address
   previous_log_index: NonNegativeInt
   previous_log_term: NonNegativeInt
   entries: List[Entry]

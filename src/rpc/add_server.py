@@ -3,8 +3,9 @@
 from typing import Union
 
 from pydantic import StrictBool
+from utils import Address
 
-from . import Address, BaseRPCRequest, BaseRPCResponse
+from . import BaseRPCRequest, BaseRPCResponse
 
 
 class AddServerRPCRequest(BaseRPCRequest):
