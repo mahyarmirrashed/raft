@@ -33,3 +33,11 @@ class BaseRPC:
 
     if int(obj) < 0:
       raise ValueError(f"{name.capitalize()} must be greater or equal to zero.")
+
+
+class BaseRPCRequest(BaseRPC):
+  pass
+
+
+class BaseRPCResponse(BaseRPC):
+  pass
