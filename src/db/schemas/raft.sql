@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS Entries (
   id INTEGER PRIMARY KEY NOT NULL CHECK(id >= 0),
-  term INTEGER PRIMARY KEY NOT NULL CHECK(id >= 0),
-  username TEXT PRIMARY KEY NOT NULL CHECK (
+  term INTEGER NOT NULL CHECK(id >= 0),
+  username TEXT NOT NULL CHECK (
     LENGTH(username) <= 64
     AND username NOT LIKE '%[^a-zA-Z0-9]%'
   ),
