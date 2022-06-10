@@ -1,26 +1,22 @@
 """Defines a server identity."""
 
-from string import hexdigits
+import re
 
-from pydantic import validator
-from pydantic.dataclasses import dataclass
+from pydantic import BaseModel, ConstrainedStr, validator
 from typing_extensions import Final
 
 LENGTH: Final[int] = 64
 
 
-@dataclass(frozen=True)
-class Identity:
+class _Sha256Hash(ConstrainedStr):
+  strip_whitespace = True
+  to_lower = True
+  min_length = LENGTH
+  max_length = LENGTH
+  regex = re.compile(r"^[0-9A-F]+$")
+
+
+class Identity(BaseModel):
   """Implements controlled method for building and transferring server identities."""
 
-  value: str
-
-  @validator("value")
-  def check_hexadecimal(cls, v):
-    assert set(v).issubset(set(hexdigits)), f"{v} must be hexadecimal"
-    return v
-
-  @validator("value")
-  def check_length(cls, v):
-    assert len(v) == LENGTH, f"value must be {LENGTH} characters"
-    return v
+  value: _Sha256Hash
