@@ -4,12 +4,10 @@ from typing import List
 
 from db.objects import Entry, Identity
 from pydantic import NonNegativeInt, StrictBool
-from pydantic.dataclasses import dataclass
 
 from . import BaseRPCRequest, BaseRPCResponse
 
 
-@dataclass(frozen=True)
 class AppendEntriesRPCRequest(BaseRPCRequest):
   """Implements AppendEntries RPC request arguments."""
 
@@ -21,7 +19,6 @@ class AppendEntriesRPCRequest(BaseRPCRequest):
   leader_commit_index: NonNegativeInt
 
 
-@dataclass(frozen=True)
 class AppendEntriesRPCResponse(BaseRPCResponse):
   """Implements AppendEntries RPC response results."""
 

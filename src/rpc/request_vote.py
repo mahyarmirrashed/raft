@@ -2,12 +2,10 @@
 
 from db.objects import Identity
 from pydantic import NonNegativeInt, StrictBool
-from pydantic.dataclasses import dataclass
 
 from . import BaseRPCRequest, BaseRPCResponse
 
 
-@dataclass(frozen=True)
 class RequestVoteRPCRequest(BaseRPCRequest):
   """Implements RequestVote RPC request arguments."""
 
@@ -17,7 +15,6 @@ class RequestVoteRPCRequest(BaseRPCRequest):
   last_log_term: NonNegativeInt
 
 
-@dataclass(frozen=True)
 class RequestVoteRPCResponse(BaseRPCResponse):
   """Implements RequestVote RPC response results."""
 
