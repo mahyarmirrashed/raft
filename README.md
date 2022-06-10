@@ -1,6 +1,6 @@
 # Raft
 
-Python implementation of the Raft consensus algorithm^[[Consensus: Briding Theory and Practice](https://raw.githubusercontent.com/ongardie/dissertation/master/book.pdf)] designed by Diego Ongaro and John Ousterhout at Stanford University.
+Python implementation of the Raft consensus algorithm[^1] designed by Diego Ongaro and John Ousterhout at Stanford University.
 
 #### Disclaimer
 
@@ -11,3 +11,5 @@ This implementation is written in Python, an interpreted language, is unoptimize
 Therefore, it goes without saying that **this project should not be used in any production environment(s)**. If you are looking for production-ready versions of the Raft consensus algorithm, please visit [Raft's website](https://raft.github.io/).
 
 #### References
+
+[^1]: [Consensus: Briding Theory and Practice](https://raw.githubusercontent.com/ongardie/dissertation/master/book.pdf)
