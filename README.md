@@ -8,6 +8,6 @@ Raft is a consensus algorithm designed for understandability and is generally me
 
 This implementation is written in Python, an interpreted language, is unoptimized, and is written for readability so that it may be used as an educational tool for educators and ethusiasts.
 
-It goes without saying that this project, thus, should not be used in any production environment(s). If you are looking for production-ready versions of the Raft consensus algorithm, please visit [Raft's website](https://raft.github.io/).
+Therefore, it goes without saying that **this project should not be used in any production environment(s)**. If you are looking for production-ready versions of the Raft consensus algorithm, please visit [Raft's website](https://raft.github.io/).
 
 #### References
