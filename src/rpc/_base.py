@@ -1,43 +1,24 @@
 """Defines the base RPC (Remote Procedure Call)."""
 
-from typing import Any
+from orjson import loads, dumps
+from pydantic import BaseModel
 
 
-class BaseRPC:
-  """Implements helper methods present on all RPCs."""
+class BaseRPC(BaseModel):
+  """Base RPC message."""
 
-  @staticmethod
-  def serialize(self):
-    pass
-
-  @staticmethod
-  def _validate_boolean(obj: Any, name: str = "object") -> None:
-    """Ensure object is boolean."""
-    if not isinstance(name, str):
-      raise TypeError("Object name must be a string.")
-    elif not isinstance(obj, bool):
-      raise TypeError(f"{name.capitalize()} must be a boolean.")
-
-  @staticmethod
-  def _validate_integer(obj: Any, name: str = "object") -> None:
-    """Ensure object is an integer."""
-    if not isinstance(name, str):
-      raise TypeError("Object name must be a string.")
-    elif not isinstance(obj, int):
-      raise TypeError(f"{name.capitalize()} must be an integer.")
-
-  @staticmethod
-  def _validate_integer_positive(obj: Any, name: str = "object") -> None:
-    """Ensure object is a positive integer."""
-    BaseRPC._validate_integer(obj, name)
-
-    if int(obj) < 0:
-      raise ValueError(f"{name.capitalize()} must be greater or equal to zero.")
+  class Config:
+    json_loads = loads
+    json_dumps = lambda v, *, default: dumps(v, default=default).decode()
 
 
 class BaseRPCRequest(BaseRPC):
+  """Base RPC Request type."""
+
   pass
 
 
 class BaseRPCResponse(BaseRPC):
+  """Base RPC Response type."""
+
   pass
