@@ -1,6 +1,6 @@
 """Defines the RequestVote RPC (Remote Procedure Call) as per Figure 3.1."""
 
-from _base import BaseRPCRequest, BaseRPCResponse
+from . import BaseRPCRequest, BaseRPCResponse
 
 
 class RequestVoteRPCRequest(BaseRPCRequest):

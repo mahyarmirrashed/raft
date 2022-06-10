@@ -1,6 +1,6 @@
 """Defines the RemoveServer RPC (Remote Procedure Call) as per Figure 4.1."""
 
-from _base import BaseRPCRequest, BaseRPCResponse
+from . import BaseRPCRequest, BaseRPCResponse
 
 
 class RemoveServerRPCRequest(BaseRPCRequest):
