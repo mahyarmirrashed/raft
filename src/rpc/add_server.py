@@ -19,5 +19,5 @@ class AddServerRPCResponse(BaseRPCResponse):
     pass
 
   @property
-  def leader_hint():
+  def leader_hint(self):
     pass
