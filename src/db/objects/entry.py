@@ -1,10 +1,9 @@
 """Defines a log entry."""
 
-from pydantic.dataclasses import dataclass
+from pydantic import BaseModel
 
 
-@dataclass(frozen=True)
-class Entry:
+class Entry(BaseModel):
   """Implements a log entry for the raft."""
 
   key: str
