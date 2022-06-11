@@ -25,7 +25,7 @@ class Server(BaseModel):
   """Define server model."""
 
   _driver: DatabaseDriver = DatabaseDriver()
-  role: BaseRole = FollowerRole(
+  _role: BaseRole = FollowerRole(
     current_term=0,
     voted_for=None,
     log=[],
@@ -37,17 +37,17 @@ class Server(BaseModel):
   @classmethod
   def _role_demote_to_follower(cls) -> None:
     """Demote current candidate/leader role to follower role."""
-    Server.role = FollowerRole(**cls.role.dict())
+    cls._role = FollowerRole(**cls._role.dict())
 
   @classmethod
   def _role_promote_to_candidate(cls) -> None:
     """Promote current follower role to candidate role."""
-    Server.role = CandidateRole(**cls.role.dict())
+    cls._role = CandidateRole(**cls._role.dict())
 
   @classmethod
   def _role_promote_to_leader(cls) -> None:
     """Promote current candidate role to leader role."""
-    Server.role = LeaderRole(**cls.role.dict(), next_index=[], match_index=[])
+    cls._role = LeaderRole(**cls._role.dict(), next_index=[], match_index=[])
 
   @classmethod
   def _rpc_handle_append_entries_request(cls, req: AppendEntriesRPCRequest) -> None:
