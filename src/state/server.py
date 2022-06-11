@@ -102,5 +102,7 @@ class Server(BaseModel):
         raise NotImplementedError("ClientQuery RPC is not implemented yet.")
     except ValidationError:
       print("ERROR: Invalid RPC request/response received.")
+    except NotImplementedError as e:
+      print(f"ERROR: {e}")
     except:
       print("CRITICAL: Deadly unknown exception occurred.")
