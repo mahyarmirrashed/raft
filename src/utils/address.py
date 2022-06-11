@@ -3,7 +3,7 @@
 import re
 from typing import Tuple
 
-from pydantic import ConstrainedInt, ConstrainedStr
+from pydantic import BaseModel, ConstrainedInt, ConstrainedStr
 
 
 # https://stackoverflow.com/questions/106179/regular-expression-to-match-dns-hostname-or-ip-address
@@ -22,4 +22,6 @@ class Port(ConstrainedInt):
   lt = 65536
 
 
-Address = Tuple[Host, Port]
+class Address(BaseModel):
+  host: Host
+  port: Port
