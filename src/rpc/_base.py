@@ -8,6 +8,7 @@ class BaseRPC(BaseModel):
   """Base RPC message."""
 
   class Config:
+    frozen = True
     json_loads = loads
     json_dumps = lambda v, *, default: dumps(v, default=default).decode()
 
