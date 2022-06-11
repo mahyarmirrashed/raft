@@ -5,16 +5,16 @@ from typing import Union
 from pydantic import StrictBool
 from utils import Address
 
-from . import BaseRPCRequest, BaseRPCResponse
+from . import BaseRPC
 
 
-class AddServerRPCRequest(BaseRPCRequest):
+class AddServerRPCRequest(BaseRPC):
   """Implements AddServer RPC request arguments."""
 
   new_server: Address
 
 
-class AddServerRPCResponse(BaseRPCResponse):
+class AddServerRPCResponse(BaseRPC):
   """Implements AddServer RPC response results."""
 
   status: StrictBool

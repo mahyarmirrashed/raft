@@ -5,16 +5,16 @@ from typing import Union
 from pydantic import StrictBool
 from utils import Address
 
-from . import BaseRPCRequest, BaseRPCResponse
+from . import BaseRPC
 
 
-class RemoveServerRPCRequest(BaseRPCRequest):
+class RemoveServerRPCRequest(BaseRPC):
   """Implements RemoveServer RPC request arguments."""
 
   old_server: Address
 
 
-class RemoveServerRPCResponse(BaseRPCResponse):
+class RemoveServerRPCResponse(BaseRPC):
   """Implements RemoveServer RPC response results."""
 
   status: StrictBool

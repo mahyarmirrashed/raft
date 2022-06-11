@@ -3,10 +3,10 @@
 from pydantic import NonNegativeInt, StrictBool
 from utils import Address
 
-from . import BaseRPCRequest, BaseRPCResponse
+from . import BaseRPC
 
 
-class RequestVoteRPCRequest(BaseRPCRequest):
+class RequestVoteRPCRequest(BaseRPC):
   """Implements RequestVote RPC request arguments."""
 
   term: NonNegativeInt
@@ -15,7 +15,7 @@ class RequestVoteRPCRequest(BaseRPCRequest):
   last_log_term: NonNegativeInt
 
 
-class RequestVoteRPCResponse(BaseRPCResponse):
+class RequestVoteRPCResponse(BaseRPC):
   """Implements RequestVote RPC response results."""
 
   term: NonNegativeInt

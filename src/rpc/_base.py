@@ -1,25 +1,9 @@
 """Defines the base RPC (Remote Procedure Call)."""
 
-from orjson import loads, dumps
-from pydantic import BaseModel
+from utils.models import FrozenModel
 
 
-class BaseRPC(BaseModel):
+class BaseRPC(FrozenModel):
   """Base RPC message."""
-
-  class Config:
-    frozen = True
-    json_loads = loads
-    json_dumps = lambda v, *, default: dumps(v, default=default).decode()
-
-
-class BaseRPCRequest(BaseRPC):
-  """Base RPC Request type."""
-
-  pass
-
-
-class BaseRPCResponse(BaseRPC):
-  """Base RPC Response type."""
 
   pass

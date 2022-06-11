@@ -6,10 +6,10 @@ from db import Entry
 from pydantic import NonNegativeInt, StrictBool
 from utils import Address
 
-from . import BaseRPCRequest, BaseRPCResponse
+from . import BaseRPC
 
 
-class AppendEntriesRPCRequest(BaseRPCRequest):
+class AppendEntriesRPCRequest(BaseRPC):
   """Implements AppendEntries RPC request arguments."""
 
   term: NonNegativeInt
@@ -20,7 +20,7 @@ class AppendEntriesRPCRequest(BaseRPCRequest):
   leader_commit_index: NonNegativeInt
 
 
-class AppendEntriesRPCResponse(BaseRPCResponse):
+class AppendEntriesRPCResponse(BaseRPC):
   """Implements AppendEntries RPC response results."""
 
   term: NonNegativeInt
