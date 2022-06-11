@@ -18,4 +18,4 @@ class RemoveServerRPCResponse(BaseRPCResponse):
   """Implements RemoveServer RPC response results."""
 
   status: StrictBool
-  leader_hint: Union[Address, None]
+  leader_hint: Union[Address, None] = None

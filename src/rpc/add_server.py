@@ -18,4 +18,4 @@ class AddServerRPCResponse(BaseRPCResponse):
   """Implements AddServer RPC response results."""
 
   status: StrictBool
-  leader_hint: Union[Address, None]
+  leader_hint: Union[Address, None] = None
