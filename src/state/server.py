@@ -18,8 +18,8 @@ from utils.address import Address
 from utils.models import FrozenModel
 from utils.rpc import RPC, RPCDirection, RPCType
 
-TIMEOUT_LOWER_BOUND: float = 2  # seconds
-TIMEOUT_UPPER_BOUND: float = 4  # seconds
+TIMEOUT_LOWER_BOUND: float = 10  # seconds
+TIMEOUT_UPPER_BOUND: float = 20  # seconds
 
 
 class _CaptureTerm(FrozenModel):
@@ -204,6 +204,8 @@ class Server(BaseModel):
 
   def _timeout_reset(self, leader: StrictBool = False) -> None:
     """Create new timeout value."""
+    print("INFO: Resetting timeout value.")
+
     self.timeout = uniform(TIMEOUT_LOWER_BOUND, TIMEOUT_UPPER_BOUND)
     # shorter timeout for leader
     if leader:
