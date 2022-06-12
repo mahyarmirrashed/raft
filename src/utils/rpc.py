@@ -9,7 +9,7 @@ from .models import FrozenModel
 
 class RPCType(IntEnum):
   # Chapter 3
-  APPEND_ENTRY = 1
+  APPEND_ENTRIES = 1
   REQUEST_VOTE = 2
   # Chapter 4
   ADD_SERVER = 3
@@ -33,7 +33,7 @@ class RPC(FrozenModel):
     RPCDirection.RESPONSE,
   ]
   type: Literal[
-    RPCType.APPEND_ENTRY,
+    RPCType.APPEND_ENTRIES,
     RPCType.REQUEST_VOTE,
     RPCType.ADD_SERVER,
     RPCType.REMOVE_SERVER,
