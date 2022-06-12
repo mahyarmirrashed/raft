@@ -35,7 +35,7 @@ class BaseRole(BaseModel):
     self.voted_for = self._driver.set_voted_for(voted_for)
 
     if voted_for is not None:
-      print(f"ERROR: Could not vote for {voted_for} in term {self.current_term}.")
+      print(f"INFO: Voted {voted_for} in term {self.current_term}.")
 
   def update_log(self, new_entry: Entry) -> None:
     """Update the log first with the driver, then here."""
