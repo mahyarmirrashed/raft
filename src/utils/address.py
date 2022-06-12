@@ -21,5 +21,5 @@ class _Port(ConstrainedInt):
 
 
 class Address(BaseModel):
-  host: _Host
+  host: _Host = _Host("0.0.0.0")
   port: _Port
