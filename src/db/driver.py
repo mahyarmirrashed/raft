@@ -28,29 +28,32 @@ class _State(BaseModel):
   voted_for: Union[Address, None]
 
 
+relative = lambda path: Path(__file__).parent / path
+
+
 class DatabaseDriver(BaseModel):
   """Driver for server variables that need to be persistent."""
 
-  _db: _Database = _Database.parse_file(Path(__file__).parent / "json/db.json")
-  _log: _Log = _Log.parse_file(Path(__file__).parent / "json/log.json")
-  _state: _State = _State.parse_file(Path(__file__).parent / "json/state.json")
+  _db: _Database = _Database.parse_file(relative("json/db.json"))
+  _log: _Log = _Log.parse_file(relative("json/log.json"))
+  _state: _State = _State.parse_file(relative("json/state.json"))
 
   @classmethod
   def _dump_db(cls) -> None:
     """Store the server database to disk."""
-    with open("json/db.json", mode="w") as fp:
+    with open(relative("json/db.json"), mode="w") as fp:
       fp.write(cls._db.json())
 
   @classmethod
   def _dump_log(cls) -> None:
     """Store the server log to disk."""
-    with open("json/log.json", mode="w") as fp:
+    with open(relative("json/log.json"), mode="w") as fp:
       fp.write(cls._log.json())
 
   @classmethod
   def _dump_state(cls) -> None:
     """Store the server state to disk."""
-    with open("json/state.json", mode="w") as fp:
+    with open(relative("json/state.json"), mode="w") as fp:
       fp.write(cls._state.json())
 
   @classmethod
