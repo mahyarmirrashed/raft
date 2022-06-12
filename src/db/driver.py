@@ -123,7 +123,10 @@ class DatabaseDriver(BaseModel):
     """Set an entry at a given index. If valid, append, if conflicting,
     erasing everything past that entry."""
     if isinstance(new_entry, Entry) and 0 < new_entry.index <= len(cls._log.log):
-      existing_entry: Union[Entry, None] = cls._log.log[new_entry.index]
+      existing_entry: Union[Entry, None] = None
+
+      if new_entry.index < len(cls._log.log):
+        existing_entry = cls._log.log[new_entry.index]
 
       if existing_entry is None:
         cls._log.log.append(new_entry)
