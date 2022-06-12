@@ -80,7 +80,10 @@ class Server(BaseModel):
   def _rpc_handle_append_entries_request(self, req: AppendEntriesRPCRequest) -> RPC:
     """Implement the AppendEntries RPC request according to Figure 3.1."""
     res: AppendEntriesRPCResponse
-    previous_entry: Union[Entry, None] = self._role.log[req.previous_log_index]
+    previous_entry: Union[Entry, None] = None
+
+    if 0 <= req.previous_log_index < len(self._role.log):
+      self._role.log[req.previous_log_index]
 
     print("INFO: Handling AppendEntries RPC request.")
 
