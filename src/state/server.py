@@ -136,27 +136,26 @@ class Server(BaseModel):
 
   def _rpc_handle_request_vote_request(self, req: RequestVoteRPCRequest) -> RPC:
     """Implement the RequestVote RPC request according to Figure 3.1."""
-    res: RequestVoteRPCResponse
+    res = RequestVoteRPCResponse(term=self._role.current_term, vote_granted=False)
     last_entry: Union[Entry, None] = self._role.log[-1]
     assert last_entry is not None
 
-    print("INFO: Handling RequestVote RPC request.")
+    if not isinstance(self._role, LeaderRole):
+      print("INFO: Handling RequestVote RPC request.")
 
-    self._timeout_reset()
+      self._timeout_reset()
 
-    at_least_as_up_to_date = req.last_log_term > last_entry.term or (
-      req.last_log_term == last_entry.term and req.last_log_index >= last_entry.index
-    )
+      at_least_as_up_to_date = req.last_log_term > last_entry.term or (
+        req.last_log_term == last_entry.term and req.last_log_index >= last_entry.index
+      )
 
-    if req.term < self._role.current_term:
-      res = RequestVoteRPCResponse(term=self._role.current_term, vote_granted=False)
-    elif (
-      self._role.voted_for is None or self._role.voted_for == req.candidate_identity
-    ) and at_least_as_up_to_date:
-      self._role.update_voted_for(req.candidate_identity)
-      res = RequestVoteRPCResponse(term=self._role.current_term, vote_granted=True)
-    else:
-      res = RequestVoteRPCResponse(term=self._role.current_term, vote_granted=False)
+      if req.term < self._role.current_term:
+        pass
+      elif (
+        self._role.voted_for is None or self._role.voted_for == req.candidate_identity
+      ) and at_least_as_up_to_date:
+        self._role.update_voted_for(req.candidate_identity)
+        res = RequestVoteRPCResponse(term=self._role.current_term, vote_granted=True)
 
     return RPC(
       direction=RPCDirection.RESPONSE,
