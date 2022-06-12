@@ -18,6 +18,10 @@ For simplicity and sake of teaching, this implementation did not implement any a
 
 Contributions are always welcome!
 
+###### Python Version
+
+This Python implementation has been tested on Linux in a Python 3.6.8 Anaconda environment.
+
 #### References
 
 [^raft_book]: [Consensus: Briding Theory and Practice](https://raw.githubusercontent.com/ongardie/dissertation/master/book.pdf)
