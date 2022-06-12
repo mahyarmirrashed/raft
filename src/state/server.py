@@ -232,8 +232,8 @@ class Server(BaseModel):
     return isinstance(self._role, LeaderRole)
 
   def is_timed_out(self) -> StrictBool:
-    """Indicate if the server has timed out. Leaders cannot time out."""
-    return not isinstance(self._role, LeaderRole) and time() > self.timeout
+    """Indicate if the server has timed out."""
+    return time() > self.timeout
 
   def start_election(self) -> None:
     """Start election process."""
