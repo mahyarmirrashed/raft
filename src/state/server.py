@@ -204,10 +204,12 @@ class Server(BaseModel):
 
   def _timeout_reset(self, leader: StrictBool = False) -> None:
     """Create new timeout value."""
-    self.timeout = time() + uniform(TIMEOUT_LOWER_BOUND, TIMEOUT_UPPER_BOUND)
-    # shorter timeout for
+    self.timeout = uniform(TIMEOUT_LOWER_BOUND, TIMEOUT_UPPER_BOUND)
+    # shorter timeout for leader
     if leader:
-      self.timeout -= TIMEOUT_LOWER_BOUND / 3
+      self.timeout /= 3
+    # offset to current time
+    self.timeout += time()
 
   def apply_commits(self) -> None:
     """Instruct role to handle applying commits to the database."""
