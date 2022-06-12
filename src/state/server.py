@@ -18,8 +18,8 @@ from utils.address import Address
 from utils.models import FrozenModel
 from utils.rpc import RPC, RPCDirection, RPCType
 
-TIMEOUT_LOWER_BOUND: float = 10  # seconds
-TIMEOUT_UPPER_BOUND: float = 20  # seconds
+TIMEOUT_LOWER_BOUND: float = 5  # seconds
+TIMEOUT_UPPER_BOUND: float = 8  # seconds
 
 
 class _CaptureTerm(FrozenModel):
