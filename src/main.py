@@ -42,7 +42,7 @@ def main() -> None:
   assert args.port in ports
 
   # inialize server
-  server = Server(addresses=[Address(port=port) for port in ports if port != args.port])
+  server = Server(addresses=[Address(port=port) for port in ports])
   server.init_sock(args.port)
 
   print(f"INFO: Server is starting on 0.0.0.0:{args.port}...")
