@@ -2,7 +2,9 @@
 
 import re
 
-from pydantic import BaseModel, ConstrainedInt, ConstrainedStr
+from pydantic import ConstrainedInt, ConstrainedStr
+
+from utils.models import FrozenModel
 
 # https://stackoverflow.com/questions/106179/regular-expression-to-match-dns-hostname-or-ip-address
 REGEX_HOSTNAME = r"(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])"
@@ -20,6 +22,6 @@ class _Port(ConstrainedInt):
   lt = 65536
 
 
-class Address(BaseModel):
+class Address(FrozenModel):
   host: _Host = _Host("0.0.0.0")
   port: _Port
