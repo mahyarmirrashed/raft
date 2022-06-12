@@ -274,7 +274,7 @@ class Server(BaseModel):
         N += 1
 
       self._rpc_send_append_entries()
-      self._timeout_reset()
+      self._timeout_reset(leader=True)
 
   def rpc_handle(self, rpc: RPC, sender: Address) -> None:
     """Handle an incoming RPC request."""
