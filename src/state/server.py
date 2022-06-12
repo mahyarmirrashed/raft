@@ -36,6 +36,9 @@ class Server(BaseModel):
   addresses: List[Address]
   timeout: float = time() + uniform(TIMEOUT_LOWER_BOUND, TIMEOUT_UPPER_BOUND)
 
+  class Config:
+    arbitrary_types_allowed = True
+
   @classmethod
   def _id(cls) -> Address:
     """Return server identification."""
