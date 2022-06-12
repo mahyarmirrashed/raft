@@ -267,7 +267,8 @@ class Server(BaseModel):
       N = min(match_indices)
 
       while (
-        N > self._role.commit_index
+        N < len(self._role.log)
+        and N > self._role.commit_index
         and sum(idx >= N for idx in match_indices) * 2 > len(self.addresses)
         and self._role.log[N].term == self._role.current_term
       ):
