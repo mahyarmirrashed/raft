@@ -32,8 +32,10 @@ class BaseRole(BaseModel):
 
   def update_voted_for(self, voted_for: Union[Address, None]) -> None:
     """Update the voted for first with the driver, then here."""
-    print(f"INFO: Voted {voted_for} for term {self.current_term}.")
     self.voted_for = self._driver.set_voted_for(voted_for)
+
+    if voted_for is not None:
+      print(f"ERROR: Could not vote for {voted_for} in term {self.current_term}.")
 
   def update_log(self, new_entry: Entry) -> None:
     """Update the log first with the driver, then here."""

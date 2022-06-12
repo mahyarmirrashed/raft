@@ -112,9 +112,7 @@ class DatabaseDriver(BaseModel):
   @classmethod
   def set_voted_for(cls, voted_for: Union[Address, None]) -> Union[Address, None]:
     """Set who the server has voted for in this curren term."""
-    if (
-      voted_for is None or isinstance(voted_for, Address)
-    ) and cls._state.voted_for is None:
+    if voted_for is None or isinstance(voted_for, Address):
       cls._state.voted_for = voted_for
       cls._dump_state()
 
