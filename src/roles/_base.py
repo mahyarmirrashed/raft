@@ -30,6 +30,8 @@ class BaseRole(BaseModel):
     """Update the current term with the driver, then here."""
     self.current_term = self._driver.set_current_term(new_term)
 
+    print(f"INFO: Updated current term to {self.current_term}.")
+
   def update_voted_for(self, voted_for: Union[Address, None]) -> None:
     """Update the voted for first with the driver, then here."""
     self.voted_for = self._driver.set_voted_for(voted_for)
