@@ -45,7 +45,7 @@ def main() -> None:
   server = Server(addresses=[Address(port=port) for port in ports])
   server.init_sock(args.port)
 
-  print(f"INFO: Server is starting on 0.0.0.0:{args.port}...")
+  print(f"INFO: Server is starting on 127.0.0.1:{args.port}...")
 
   try:
     while True:

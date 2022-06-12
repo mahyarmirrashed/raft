@@ -23,5 +23,5 @@ class _Port(ConstrainedInt):
 
 
 class Address(FrozenModel):
-  host: _Host = _Host("0.0.0.0")
+  host: _Host = _Host("127.0.0.1")
   port: _Port

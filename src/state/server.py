@@ -218,7 +218,7 @@ class Server(BaseModel):
     try:
       self.sock = socket(AF_INET, SOCK_DGRAM)
       self.sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-      self.sock.bind(("", port))
+      self.sock.bind(("127.0.0.1", port))
     except:
       print("ERROR: Failed to set up socket.")
       exit(1)
