@@ -52,7 +52,9 @@ class Server(BaseModel):
     if capture.term is not None and capture.term > self._role.current_term:
       self._role.update_current_term(capture.term)
       self._role.update_voted_for(None)
-      self._role_demote_to_follower()
+
+      if not isinstance(self._role, FollowerRole):
+        self._role_demote_to_follower()
 
   def _role_demote_to_follower(self) -> None:
     """Demote current candidate/leader role to follower role."""
