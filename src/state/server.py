@@ -83,7 +83,7 @@ class Server(BaseModel):
     previous_entry: Union[Entry, None] = None
 
     if 0 <= req.previous_log_index < len(self._role.log):
-      self._role.log[req.previous_log_index]
+      previous_entry = self._role.log[req.previous_log_index]
 
     print("INFO: Handling AppendEntries RPC request.")
 
