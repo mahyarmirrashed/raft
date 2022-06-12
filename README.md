@@ -14,6 +14,10 @@ Therefore, it goes without saying that **this project should not be used in any 
 
 For simplicity and sake of teaching, this implementation did not implement any asynchronous function calling through the `asyncio`[^asyncio_package] Python package or multi-threading through the Python `threading`[^threading_package] package. Contributions to enable these features are welcome but will be placed on separate branches so that the `main` branch always have the basic implementation of the Raft consensus algorithm. Debugging or walking through multi-threaded code can be confusing and counter-intuitive for first-time Raft learners.
 
+#### Contributing
+
+Contributions are always welcome!
+
 #### References
 
 [^raft_book]: [Consensus: Briding Theory and Practice](https://raw.githubusercontent.com/ongardie/dissertation/master/book.pdf)
