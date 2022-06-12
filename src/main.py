@@ -49,7 +49,7 @@ def main() -> None:
 
   try:
     while True:
-      print(f"INFO: Timing out in {server.timeout - time()} seconds...")
+      print(f"INFO: Timing out in {server.timeout - time():.2f} seconds...")
 
       readable, _, exceptional = select(
         [server.sock], [], [], max(0, server.timeout - time())
