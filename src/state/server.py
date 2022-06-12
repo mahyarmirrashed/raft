@@ -283,10 +283,12 @@ class Server(BaseModel):
         res: Union[RPC, None] = None
 
         if rpc.type == RPCType.APPEND_ENTRIES:
+          print("INFO: Handling AppendEntries RPC request.")
           res = cls._rpc_handle_append_entries_request(
             AppendEntriesRPCRequest.parse_raw(rpc.content)
           )
         elif rpc.type == RPCType.REQUEST_VOTE:
+          print("INFO: Handling RequestVote RPC request.")
           res = cls._rpc_handle_request_vote_request(
             RequestVoteRPCRequest.parse_raw(rpc.content)
           )
@@ -307,11 +309,13 @@ class Server(BaseModel):
           cls._rpc_send(res, sender)
       elif rpc.direction == RPCDirection.RESPONSE:
         if rpc.type == RPCType.APPEND_ENTRIES:
+          print("INFO: Handling AppendEntries RPC response.")
           cls._rpc_handle_append_entries_response(
             AppendEntriesRPCResponse.parse_raw(rpc.content),
             sender,
           )
         elif rpc.type == RPCType.REQUEST_VOTE:
+          print("INFO: Handling RequestVote RPC response.")
           cls._rpc_handle_request_vote_response(
             RequestVoteRPCResponse.parse_raw(rpc.content),
             sender,

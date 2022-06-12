@@ -45,6 +45,8 @@ def main() -> None:
   server = Server(addresses=[Address(port=port) for port in ports if port != args.port])
   server.init_sock(args.port)
 
+  print(f"INFO: Server is starting on 0.0.0.0:{args.port}...")
+
   try:
     while True:
       readable, _, exceptional = select([server.sock], [], [], time() - server.timeout)
@@ -68,7 +70,7 @@ def main() -> None:
       server.apply_commits()
 
   except KeyboardInterrupt:
-    print("Server ending normally...")
+    print("INFO: Server ending normally...")
   except Exception as e:
     print(f"CRITICAL: {e}")
 

@@ -22,6 +22,8 @@ class BaseRole(BaseModel):
     """Apply all committed entries to the state machine."""
     while cls.commit_index > cls.last_applied_index:
       entry = cls.log[cls.last_applied_index]
+      print(f"INFO: Applying {entry} to the database.")
+
       cls._driver.set_db(entry.key, entry.value)
       cls.last_applied_index += 1
 
