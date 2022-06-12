@@ -38,23 +38,26 @@ class DatabaseDriver(BaseModel):
   _log: _Log = _Log.parse_file(relative("json/log.json"))
   _state: _State = _State.parse_file(relative("json/state.json"))
 
+  @staticmethod
+  def _dump(path: str, content: str) -> None:
+    """Dump information to a file."""
+    with open(relative(path), mode="w") as fp:
+      fp.write(f"{content}\n")
+
   @classmethod
   def _dump_db(cls) -> None:
     """Store the server database to disk."""
-    with open(relative("json/db.json"), mode="w") as fp:
-      fp.write(cls._db.json())
+    cls._dump("json/db.json", cls._db.json())
 
   @classmethod
   def _dump_log(cls) -> None:
     """Store the server log to disk."""
-    with open(relative("json/log.json"), mode="w") as fp:
-      fp.write(cls._log.json())
+    cls._dump("json/log.json", cls._log.json())
 
   @classmethod
   def _dump_state(cls) -> None:
     """Store the server state to disk."""
-    with open(relative("json/state.json"), mode="w") as fp:
-      fp.write(cls._state.json())
+    cls._dump("json/state.json", cls._state.json())
 
   @classmethod
   def get_db(cls, key: str) -> Union[str, None]:
