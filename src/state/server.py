@@ -71,7 +71,7 @@ class Server(BaseModel):
     print(f"INFO: Promoted to term {self._role.current_term} leader.")
     self._role = LeaderRole(
       **self._role.dict(),
-      next_index={address: len(self._role.log) - 1 for address in self.addresses},
+      next_index={address: len(self._role.log) for address in self.addresses},
       match_index={address: 0 for address in self.addresses},
     )
 
