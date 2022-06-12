@@ -223,7 +223,7 @@ class Server(BaseModel):
     """Start election process."""
     if self.sock is not None:
       self._role_promote_to_candidate()
-      self._role.update_current_term(self._role.current_term + 1)
+      self._role.update_current_term(NonNegativeInt(self._role.current_term + 1))
       self._role.update_voted_for(self._id())
       self._votes = {self._id()}
       self._timeout_reset()
