@@ -166,6 +166,7 @@ class Server(BaseModel):
       if len(self._votes) * 2 > len(self.addresses):
         self._role_promote_to_leader()
         self._rpc_send_append_entries()
+        self._timeout_reset(leader=True)
 
   def _rpc_send(self, rpc: RPC, addr: Address) -> None:
     """Send an RPC to another server."""
