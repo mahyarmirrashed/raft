@@ -181,11 +181,9 @@ class Server(BaseModel):
   def _rpc_send_append_entries(self) -> None:
     """Send an AppendEntry RPC to everyone but us."""
     if isinstance(self._role, LeaderRole):
-      leader: LeaderRole = self._role
-
       for address in self.addresses:
         if address != self._id():
-          previous_entry = self._role.log[leader.next_index[address] - 1]
+          previous_entry = self._role.log[self._role.next_index[address] - 1]
 
           self._rpc_send(
             RPC(
@@ -196,7 +194,7 @@ class Server(BaseModel):
                 leader_identity=self._id(),
                 previous_log_index=previous_entry.index,
                 previous_log_term=previous_entry.term,
-                entries=self._role.log[leader.next_index[address] :],
+                entries=self._role.log[self._role.next_index[address] :],
                 leader_commit_index=self._role.commit_index,
               ).json(),
             ),
