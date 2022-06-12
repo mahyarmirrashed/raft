@@ -1,6 +1,7 @@
 """Define server main loop here."""
 
 from argparse import ArgumentParser
+from pathlib import Path
 from select import select
 from time import time
 
@@ -33,7 +34,7 @@ args = parser.parse_args()
 def main() -> None:
   """Program enters here."""
 
-  with open("config.json", mode="r") as fp:
+  with open(Path(__file__).parent / "config.json", mode="r") as fp:
     config = loads(fp.read())
 
   ports = map(int, config["ports"])
