@@ -3,7 +3,7 @@
 from random import uniform
 from socket import SOL_SOCKET, socket, AF_INET, SOCK_DGRAM, SO_REUSEADDR
 from time import time
-from typing import List, Set, Union
+from typing import Dict, List, Set, Union
 
 from pydantic import BaseModel, Extra, NonNegativeInt, StrictBool, ValidationError
 from db import Entry
@@ -29,6 +29,7 @@ class _CaptureTerm(FrozenModel):
 class Server(BaseModel):
   """Define server model."""
 
+  _entries_sent: Dict[Address, NonNegativeInt]
   _role: BaseRole = FollowerRole(commit_index=0, last_applied_index=0)
   _votes: Set[Address] = set()
   sock: Union[socket, None] = None
@@ -74,6 +75,7 @@ class Server(BaseModel):
       next_index={address: len(self._role.log) for address in self.addresses},
       match_index={address: 0 for address in self.addresses},
     )
+    self._entries_sent = {address: 0 for address in self.addresses}
 
   def _rpc_handle_append_entries_request(self, req: AppendEntriesRPCRequest) -> RPC:
     """Implement the AppendEntries RPC request according to Figure 3.1."""
@@ -115,11 +117,18 @@ class Server(BaseModel):
     """Implement the AppendEntries RPC response according to Figure 3.1."""
     print(f"INFO: Handling AppendEntries RPC response: {res}.")
 
-    if isinstance(self._role, LeaderRole):
+    if isinstance(self._role, LeaderRole) and res.term == self._role.current_term:
       if res.success:
-        self._role.next_index[sender] += 1
-        self._role.match_index[sender] += 1
-      else:
+        previous_log_index = self._role.next_index[sender] - 1
+        num_entries = self._entries_sent[sender]
+
+        if self._role.match_index[sender] > previous_log_index + num_entries:
+          print("WARNING: Match index did not monotonically increase within a term.")
+        else:
+          self._role.match_index[sender] = previous_log_index + num_entries
+
+        self._role.next_index[sender] = self._role.match_index[sender] + 1
+      elif self._role.next_index[sender] > 1:
         self._role.next_index[sender] -= 1
 
   def _rpc_handle_request_vote_request(self, req: RequestVoteRPCRequest) -> RPC:
@@ -184,6 +193,8 @@ class Server(BaseModel):
       for address in self.addresses:
         if address != self._id():
           previous_entry = self._role.log[self._role.next_index[address] - 1]
+          entries = self._role.log[self._role.next_index[address] :]
+          self._entries_sent[address] = len(entries)
 
           self._rpc_send(
             RPC(
@@ -192,9 +203,9 @@ class Server(BaseModel):
               content=AppendEntriesRPCRequest(
                 term=self._role.current_term,
                 leader_identity=self._id(),
-                previous_log_index=previous_entry.index,
+                previous_log_index=self._role.next_index[address] - 1,
                 previous_log_term=previous_entry.term,
-                entries=self._role.log[self._role.next_index[address] :],
+                entries=entries,
                 leader_commit_index=self._role.commit_index,
               ).json(),
             ),
