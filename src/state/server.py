@@ -50,7 +50,7 @@ class Server(BaseModel):
   def _role_demote_if_necessary(self, capture: _CaptureTerm) -> None:
     """Convert to follower role if term is defined and larger."""
     if capture.term is not None and capture.term > self._role.current_term:
-      self._role.update_current_term(capture.term)
+      self._role.update_current_term(NonNegativeInt(capture.term))
       self._role.update_voted_for(None)
 
       if not isinstance(self._role, FollowerRole):
