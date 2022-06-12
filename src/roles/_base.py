@@ -22,20 +22,20 @@ class BaseRole(BaseModel):
     """Apply all committed entries to the state machine."""
     while cls.commit_index > cls.last_applied_index:
       entry = cls.log[cls.last_applied_index]
-      cls._driver.update_db(entry.key, entry.value)
+      cls._driver.set_db(entry.key, entry.value)
       cls.last_applied_index += 1
 
   @classmethod
   def update_current_term(cls, new_term: NonNegativeInt) -> None:
     """Update the current term with the driver, then here."""
-    cls.current_term = cls._driver.update_current_term(new_term)
+    cls.current_term = cls._driver.set_current_term(new_term)
 
   @classmethod
   def update_voted_for(cls, voted_for: Union[Address, None]) -> None:
     """Update the voted for first with the driver, then here."""
-    cls.voted_for = cls._driver.update_voted_for(voted_for)
+    cls.voted_for = cls._driver.set_voted_for(voted_for)
 
   @classmethod
   def update_log(cls, new_entry: Entry) -> None:
     """Update the log first with the driver, then here."""
-    cls.log = cls._driver.update_log(new_entry)
+    cls.log = cls._driver.set_log(new_entry)
