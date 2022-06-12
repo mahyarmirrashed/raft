@@ -49,7 +49,9 @@ def main() -> None:
 
   try:
     while True:
-      readable, _, exceptional = select([server.sock], [], [], time() - server.timeout)
+      readable, _, exceptional = select(
+        [server.sock], [], [], max(0, server.timeout - time())
+      )
 
       if server.is_timed_out():
         if server.is_leader():
