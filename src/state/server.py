@@ -5,7 +5,7 @@ from socket import SOL_SOCKET, socket, AF_INET, SOCK_DGRAM, SO_REUSEADDR
 from time import time
 from typing import List, Set, Union
 
-from pydantic import BaseModel, NonNegativeInt, StrictBool, ValidationError
+from pydantic import BaseModel, Extra, NonNegativeInt, StrictBool, ValidationError
 from db import Entry
 from roles import BaseRole, CandidateRole, FollowerRole, LeaderRole
 from rpc import (
@@ -38,6 +38,7 @@ class Server(BaseModel):
 
   class Config:
     arbitrary_types_allowed = True
+    extra = Extra.allow
 
   def _id(self) -> Address:
     """Return server identification."""
