@@ -18,9 +18,8 @@ from utils.address import Address
 from utils.models import FrozenModel
 from utils.rpc import RPC, RPCDirection, RPCType
 
-# XXX
-TIMEOUT_LOWER_BOUND: float = 10  # seconds
-TIMEOUT_UPPER_BOUND: float = 11  # seconds
+TIMEOUT_LOWER_BOUND: float = 2  # seconds
+TIMEOUT_UPPER_BOUND: float = 4  # seconds
 
 
 class _CaptureTerm(FrozenModel):
@@ -79,6 +78,8 @@ class Server(BaseModel):
     res: AppendEntriesRPCResponse
     previous_entry: Union[Entry, None] = self._role.log[req.previous_log_index]
 
+    print("INFO: Handling AppendEntries RPC request.")
+
     self._timeout_reset()
 
     if req.term < self._role.current_term:
@@ -110,6 +111,8 @@ class Server(BaseModel):
     self, res: AppendEntriesRPCResponse, sender: Address
   ) -> None:
     """Implement the AppendEntries RPC response according to Figure 3.1."""
+    print(f"INFO: Handling AppendEntries RPC response: {res}.")
+
     if isinstance(self._role, LeaderRole):
       if res.success:
         self._role.next_index[sender] += 1
@@ -122,6 +125,8 @@ class Server(BaseModel):
     res: RequestVoteRPCResponse
     last_entry: Union[Entry, None] = self._role.log[-1]
     assert last_entry is not None
+
+    print("INFO: Handling RequestVote RPC request.")
 
     self._timeout_reset()
 
@@ -147,6 +152,9 @@ class Server(BaseModel):
     self, res: RequestVoteRPCResponse, sender: Address
   ) -> None:
     """Implement the RequestVote RPC response according to Figure 3.1."""
+
+    print(f"INFO: Handling RequestVote RPC response: {res}.")
+
     if isinstance(self._role, CandidateRole) and res.vote_granted:
       self._votes.add(sender)
 
@@ -268,12 +276,10 @@ class Server(BaseModel):
         res: Union[RPC, None] = None
 
         if rpc.type == RPCType.APPEND_ENTRIES:
-          print("INFO: Handling AppendEntries RPC request.")
           res = self._rpc_handle_append_entries_request(
             AppendEntriesRPCRequest.parse_raw(rpc.content)
           )
         elif rpc.type == RPCType.REQUEST_VOTE:
-          print("INFO: Handling RequestVote RPC request.")
           res = self._rpc_handle_request_vote_request(
             RequestVoteRPCRequest.parse_raw(rpc.content)
           )
@@ -294,13 +300,11 @@ class Server(BaseModel):
           self._rpc_send(res, sender)
       elif rpc.direction == RPCDirection.RESPONSE:
         if rpc.type == RPCType.APPEND_ENTRIES:
-          print("INFO: Handling AppendEntries RPC response.")
           self._rpc_handle_append_entries_response(
             AppendEntriesRPCResponse.parse_raw(rpc.content),
             sender,
           )
         elif rpc.type == RPCType.REQUEST_VOTE:
-          print("INFO: Handling RequestVote RPC response.")
           self._rpc_handle_request_vote_response(
             RequestVoteRPCResponse.parse_raw(rpc.content),
             sender,
