@@ -17,27 +17,23 @@ class BaseRole(BaseModel):
   commit_index: NonNegativeInt
   last_applied_index: NonNegativeInt
 
-  @classmethod
-  def apply_commits(cls) -> None:
+  def apply_commits(self) -> None:
     """Apply all committed entries to the state machine."""
-    while cls.commit_index > cls.last_applied_index:
-      entry = cls.log[cls.last_applied_index]
+    while self.commit_index > self.last_applied_index:
+      entry = self.log[self.last_applied_index]
       print(f"INFO: Applying {entry} to the database.")
 
-      cls._driver.set_db(entry.key, entry.value)
-      cls.last_applied_index += 1
+      self._driver.set_db(entry.key, entry.value)
+      self.last_applied_index += 1
 
-  @classmethod
-  def update_current_term(cls, new_term: NonNegativeInt) -> None:
+  def update_current_term(self, new_term: NonNegativeInt) -> None:
     """Update the current term with the driver, then here."""
-    cls.current_term = cls._driver.set_current_term(new_term)
+    self.current_term = self._driver.set_current_term(new_term)
 
-  @classmethod
-  def update_voted_for(cls, voted_for: Union[Address, None]) -> None:
+  def update_voted_for(self, voted_for: Union[Address, None]) -> None:
     """Update the voted for first with the driver, then here."""
-    cls.voted_for = cls._driver.set_voted_for(voted_for)
+    self.voted_for = self._driver.set_voted_for(voted_for)
 
-  @classmethod
-  def update_log(cls, new_entry: Entry) -> None:
+  def update_log(self, new_entry: Entry) -> None:
     """Update the log first with the driver, then here."""
-    cls.log = cls._driver.set_log(new_entry)
+    self.log = self._driver.set_log(new_entry)
