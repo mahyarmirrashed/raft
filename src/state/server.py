@@ -132,13 +132,15 @@ class Server(BaseModel):
 
     self._timeout_reset()
 
+    at_least_as_up_to_date = req.last_log_term > last_entry.term or (
+      req.last_log_term == last_entry.term and req.last_log_index >= last_entry.index
+    )
+
     if req.term < self._role.current_term:
       res = RequestVoteRPCResponse(term=self._role.current_term, vote_granted=False)
     elif (
       self._role.voted_for is None or self._role.voted_for == req.candidate_identity
-    ) and (
-      req.last_log_term > last_entry.term or req.last_log_index > last_entry.index
-    ):
+    ) and at_least_as_up_to_date:
       self._role.update_voted_for(req.candidate_identity)
       res = RequestVoteRPCResponse(term=self._role.current_term, vote_granted=True)
     else:
