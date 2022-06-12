@@ -57,14 +57,17 @@ class Server(BaseModel):
 
   def _role_demote_to_follower(self) -> None:
     """Demote current candidate/leader role to follower role."""
+    print(f"INFO: Demoted to term {self._role.current_term} follower.")
     self._role = FollowerRole(**self._role.dict())
 
   def _role_promote_to_candidate(self) -> None:
     """Promote current follower role to candidate role."""
+    print(f"INFO: Promoted to term {self._role.current_term} candidate.")
     self._role = CandidateRole(**self._role.dict())
 
   def _role_promote_to_leader(self) -> None:
     """Promote current candidate role to leader role."""
+    print(f"INFO: Promoted to term {self._role.current_term} leader.")
     self._role = LeaderRole(
       **self._role.dict(),
       next_index={address: len(self._role.log) - 1 for address in self.addresses},
